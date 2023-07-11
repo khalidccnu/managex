@@ -1,14 +1,17 @@
 import { FC, Fragment } from "react";
+import { inject, observer } from "mobx-react";
 import { useFormik } from "formik";
 import toast from "react-hot-toast";
 import { Dialog, Transition } from "@headlessui/react";
 import { MdAddTask } from "react-icons/md";
 import { nanoid } from "nanoid";
+import { Tasks } from "@/providers/TasksProvider";
 import { addTask } from "@/utils/localStorage";
 
 type Props = {
   isATMO: boolean;
   setATMO: Function;
+  tasks?: Tasks;
 };
 
 type Title = {
@@ -24,7 +27,7 @@ const validateForm = (values: Title) => {
   return errors;
 };
 
-const AddTaskModal: FC<Props> = ({ isATMO, setATMO }) => {
+const AddTaskModal: FC<Props> = ({ isATMO, setATMO, tasks }) => {
   const formik = useFormik({
     initialValues: {
       title: "",
@@ -33,9 +36,10 @@ const AddTaskModal: FC<Props> = ({ isATMO, setATMO }) => {
     },
     validate: validateForm,
     onSubmit: (values) => {
-      addTask({ id: nanoid(), ...values });
+      addTask({ id: nanoid(), ...values, create: new Date() });
       setATMO(false);
       toast.success("New Task added!");
+      tasks?.setRefetch(!tasks.reFetch);
     },
   });
 
@@ -128,4 +132,4 @@ const AddTaskModal: FC<Props> = ({ isATMO, setATMO }) => {
   );
 };
 
-export default AddTaskModal;
+export default inject("tasks")(observer(AddTaskModal));

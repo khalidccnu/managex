@@ -3,6 +3,7 @@ export const addTask = (task: {
   title: string;
   description: string;
   status: string;
+  create: object;
 }) => {
   const tasks: object[] = getTasks();
 
