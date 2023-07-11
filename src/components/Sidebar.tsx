@@ -4,7 +4,7 @@ import { FC, useEffect, useState } from "react";
 import { FaUser } from "react-icons/fa6";
 
 type Props = {
-  hbMenu: Boolean;
+  hbMenu: boolean;
 };
 
 const Sidebar: FC<Props> = ({ hbMenu }) => {
@@ -24,7 +24,7 @@ const Sidebar: FC<Props> = ({ hbMenu }) => {
     <div
       className={`md:self-start fixed ${
         hbMenu ? "-left-96" : "left-0"
-      } top-0 md:sticky md:top-5 bg-[rgb(157,_192,_139)] w-80 md:w-auto h-full md:h-auto p-5 md:rounded transition-[left] duration-500`}
+      } top-0 md:sticky md:top-5 bg-[rgb(157,_192,_139)] w-80 md:w-auto h-full md:h-auto p-5 md:rounded z-10 transition-[left] duration-500`}
     >
       <div
         className={`h-full md:h-[calc(100vh_-_5rem)] overflow-y-auto scrollbar-hide text-[rgb(64,_81,_59)]`}

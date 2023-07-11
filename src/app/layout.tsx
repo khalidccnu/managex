@@ -1,5 +1,6 @@
 import "./globals.css";
 import React from "react";
+import { Toaster } from "react-hot-toast";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import brandIcon from "./favicon.png";
@@ -26,6 +27,7 @@ export default function RootLayout({
         className={`${inter.className} flex flex-col min-h-screen bg-[rgb(237,_241,_214)]`}
       >
         {children}
+        <Toaster />
       </body>
     </html>
   );
