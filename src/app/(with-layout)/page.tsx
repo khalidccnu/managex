@@ -9,9 +9,10 @@ import Sidebar from "@/components/Sidebar";
 import NoTask from "@/components/NoTask";
 import { Tasks } from "@/providers/TasksProvider";
 import { getTasks } from "@/utils/localStorage";
-import Header from "@/components/Header";
-import TaskCard from "@/components/TaskCard";
 import Loader from "@/components/Loader";
+import Header from "@/components/Header";
+import TasksContainer from "@/components/TasksContainer";
+import EditTaskModal from "@/components/modals/EditTaskModal";
 
 type Props = {
   tasks: Tasks;
@@ -20,6 +21,8 @@ type Props = {
 const Home: FC<Props> = ({ tasks }) => {
   const [hbMenu, setHbMenu] = useState(true);
   const [isATMO, setATMO] = useState(false);
+  const [eT, setET] = useState<null | string>(null);
+  const [isETMO, setETMO] = useState(false);
 
   const handleResize = () => {
     if (innerWidth >= 768) setHbMenu(false);
@@ -39,6 +42,10 @@ const Home: FC<Props> = ({ tasks }) => {
     tasks.setData(taskAll);
     tasks.setLoading(false);
   }, [tasks.reFetch]);
+
+  useEffect(() => {
+    if (eT) setETMO(true)
+  }, [eT]);
 
   return !tasks.loading ? (
     <section className={`py-5`}>
@@ -71,21 +78,12 @@ const Home: FC<Props> = ({ tasks }) => {
                 )}
               </div>
             </div>
-            {tasks.data.length ? (
-              <div
-                className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-5`}
-              >
-                {tasks.data.map((task: any) => (
-                  <TaskCard key={task.id} task={task} />
-                ))}
-              </div>
-            ) : (
-              <NoTask />
-            )}
+            {tasks.data.length ? <TasksContainer setET={setET} tasks={tasks} /> : <NoTask />}
           </div>
         </div>
       </div>
       <AddTaskModal isATMO={isATMO} setATMO={setATMO} />
+      <EditTaskModal eT={eT} setET={setET} isETMO={isETMO} setETMO={setETMO} />
     </section>
   ) : (
     <Loader />

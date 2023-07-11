@@ -14,9 +14,12 @@ type Props = {
     description: string;
     status: string;
   };
+  handleDelete: Function;
+  handleStatus: Function;
+  setET: Function;
 };
 
-const TaskCard: FC<Props> = ({ task }) => {
+const TaskCard: FC<Props> = ({ task, handleDelete, handleStatus, setET }) => {
   return (
     <div className={`bg-white rounded-xl`}>
       <div className="h-[150px] overflow-hidden">
@@ -31,8 +34,11 @@ const TaskCard: FC<Props> = ({ task }) => {
       </div>
       <div className="flex justify-between items-center p-2 rounded-b-xl text-xl">
         <div className={`flex space-x-0.5`}>
-          <TbEdit className={`cursor-pointer`} />
-          <TbTrashX className={`cursor-pointer`} />
+          <TbEdit className={`cursor-pointer`} onClick={() => setET(task.id)} />
+          <TbTrashX
+            className={`cursor-pointer`}
+            onClick={() => handleDelete(task.id)}
+          />
         </div>
         <div className={`flex items-center space-x-0.5`}>
           <RiCalendarTodoLine
@@ -41,6 +47,7 @@ const TaskCard: FC<Props> = ({ task }) => {
                 ? "text-2xl text-[rgb(64,_81,_59)] pointer-events-none"
                 : "cursor-pointer"
             }
+            onClick={() => handleStatus(task.id, "todo")}
           />
           <TbProgressCheck
             className={
@@ -48,6 +55,7 @@ const TaskCard: FC<Props> = ({ task }) => {
                 ? "text-2xl text-[rgb(64,_81,_59)] pointer-events-none"
                 : "cursor-pointer"
             }
+            onClick={() => handleStatus(task.id, "progress")}
           />
           <TbCircleCheck
             className={
@@ -55,6 +63,7 @@ const TaskCard: FC<Props> = ({ task }) => {
                 ? "text-2xl text-[rgb(64,_81,_59)] pointer-events-none"
                 : "cursor-pointer"
             }
+            onClick={() => handleStatus(task.id, "complete")}
           />
         </div>
       </div>
