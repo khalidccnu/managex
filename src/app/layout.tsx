@@ -22,7 +22,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" data-theme="cupcake">
-      <body className={`${inter.className} flex flex-col min-h-screen`}>
+      <body
+        className={`${inter.className} flex flex-col min-h-screen bg-[rgb(237,_241,_214)]`}
+      >
         {children}
       </body>
     </html>
