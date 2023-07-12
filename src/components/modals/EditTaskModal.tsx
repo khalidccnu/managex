@@ -8,7 +8,7 @@ import { Tasks } from "@/providers/TasksProvider";
 import { getTasks } from "@/utils/localStorage";
 
 type Props = {
-  eT: null | string;
+  eT: null | { id: string; action: string };
   setET: Function;
   isETMO: boolean;
   setETMO: Function;
@@ -38,7 +38,7 @@ const EditTaskModal: FC<Props> = ({ eT, setET, isETMO, setETMO, tasks }) => {
     onSubmit: (values) => {
       const taskAll: { id?: string; title?: string; description?: string }[] =
         getTasks();
-      const taskIndex = taskAll.findIndex((elem) => elem.id === eT);
+      const taskIndex = taskAll.findIndex((elem) => elem.id === eT.id);
 
       (taskAll[taskIndex].title = values.title),
         (taskAll[taskIndex].description = values.description);
@@ -52,10 +52,10 @@ const EditTaskModal: FC<Props> = ({ eT, setET, isETMO, setETMO, tasks }) => {
   });
 
   useEffect(() => {
-    if (eT) {
+    if (eT?.action === "edit") {
       const taskAll: { id?: string; title?: string; description?: string }[] =
         getTasks();
-      const taskIndex = taskAll.findIndex((elem) => elem.id === eT);
+      const taskIndex = taskAll.findIndex((elem) => elem.id === eT?.id);
 
       const task = taskAll[taskIndex];
       // @ts-ignore
@@ -65,7 +65,7 @@ const EditTaskModal: FC<Props> = ({ eT, setET, isETMO, setETMO, tasks }) => {
         description: task.description,
       });
     }
-  }, [eT]);
+  }, [eT?.id]);
 
   return (
     <Transition appear show={isETMO} as={Fragment}>

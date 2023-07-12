@@ -24,7 +24,7 @@ const Sidebar: FC<Props> = ({ hbMenu }) => {
     <div
       className={`md:self-start fixed ${
         hbMenu ? "-left-96" : "left-0"
-      } top-0 md:sticky md:top-5 bg-[rgb(157,_192,_139)] w-80 md:w-auto h-full md:h-auto p-5 md:rounded z-10 transition-[left] duration-500`}
+      } top-0 md:sticky md:top-5 bg-[rgb(157,_192,_139)] w-72 md:w-auto h-full md:h-auto p-5 md:rounded z-10 transition-[left] duration-500`}
     >
       <div
         className={`h-full md:h-[calc(100vh_-_5rem)] overflow-y-auto scrollbar-hide text-[rgb(64,_81,_59)]`}
@@ -39,10 +39,9 @@ const Sidebar: FC<Props> = ({ hbMenu }) => {
         </h2>
         <ul className={`flex flex-col mt-5 space-y-3`}>
           <li>
-            <span
-              className={`flex justify-center bg-gray-50 px-2 py-1 rounded`}
-            >
-              You have no pin task!
+            <span className={`flex justify-center bg-gray-50 p-2 rounded`}>
+              ManageX is a task management app to help stay organized and manage
+              day-to-day.
             </span>
           </li>
         </ul>

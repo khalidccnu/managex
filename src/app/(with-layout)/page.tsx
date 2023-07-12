@@ -3,7 +3,7 @@
 import { FC, useEffect, useState } from "react";
 import { inject, observer } from "mobx-react";
 import { CgMenuLeft } from "react-icons/cg";
-import { FaPlusCircle, FaTimesCircle } from "react-icons/fa";
+import { FaTimesCircle } from "react-icons/fa";
 import AddTaskModal from "@/components/modals/AddTaskModal";
 import Sidebar from "@/components/Sidebar";
 import NoTask from "@/components/NoTask";
@@ -12,6 +12,7 @@ import { getTasks } from "@/utils/localStorage";
 import Loader from "@/components/Loader";
 import Header from "@/components/Header";
 import TasksContainer from "@/components/TasksContainer";
+import ViewTaskModal from "@/components/modals/ViewTaskModal";
 import EditTaskModal from "@/components/modals/EditTaskModal";
 
 type Props = {
@@ -21,7 +22,8 @@ type Props = {
 const Home: FC<Props> = ({ tasks }) => {
   const [hbMenu, setHbMenu] = useState(true);
   const [isATMO, setATMO] = useState(false);
-  const [eT, setET] = useState<null | string>(null);
+  const [eT, setET] = useState<null | { id: string; action: string }>(null);
+  const [isVTMO, setVTMO] = useState(false);
   const [isETMO, setETMO] = useState(false);
 
   const handleResize = () => {
@@ -44,8 +46,9 @@ const Home: FC<Props> = ({ tasks }) => {
   }, [tasks.reFetch]);
 
   useEffect(() => {
-    if (eT) setETMO(true)
-  }, [eT]);
+    if (eT?.action === "view") setVTMO(true);
+    if (eT?.action === "edit") setETMO(true);
+  }, [eT?.id]);
 
   return !tasks.loading ? (
     <section className={`py-5`}>
@@ -54,16 +57,9 @@ const Home: FC<Props> = ({ tasks }) => {
           <Sidebar hbMenu={hbMenu} />
           <div>
             <div
-              className={`flex justify-between sticky top-5 text-lg text-[rgb(64,_81,_59)] mb-5 z-10 space-x-3`}
+              className={`flex justify-between sticky top-5 text-lg text-[rgb(64,_81,_59)] mb-5`}
             >
-              {tasks.data.length ? (
-                <Header setATMO={setATMO} />
-              ) : (
-                <FaPlusCircle
-                  className={`md:text-4xl hover:text-[#130f40] cursor-pointer`}
-                  onClick={() => setATMO(!isATMO)}
-                />
-              )}
+              <Header setATMO={setATMO} />
               <div className={`md:hidden`}>
                 {hbMenu ? (
                   <CgMenuLeft
@@ -78,11 +74,16 @@ const Home: FC<Props> = ({ tasks }) => {
                 )}
               </div>
             </div>
-            {tasks.data.length ? <TasksContainer setET={setET} tasks={tasks} /> : <NoTask />}
+            {tasks.data.length ? (
+              <TasksContainer setET={setET} tasks={tasks} />
+            ) : (
+              <NoTask />
+            )}
           </div>
         </div>
       </div>
       <AddTaskModal isATMO={isATMO} setATMO={setATMO} />
+      <ViewTaskModal eT={eT} setET={setET} isVTMO={isVTMO} setVTMO={setVTMO} />
       <EditTaskModal eT={eT} setET={setET} isETMO={isETMO} setETMO={setETMO} />
     </section>
   ) : (

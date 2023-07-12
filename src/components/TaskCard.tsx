@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { RiCalendarTodoLine } from "react-icons/ri";
+import { BiTask } from "react-icons/bi";
 import {
   TbCircleCheck,
   TbEdit,
@@ -34,7 +35,14 @@ const TaskCard: FC<Props> = ({ task, handleDelete, handleStatus, setET }) => {
       </div>
       <div className="flex justify-between items-center p-2 rounded-b-xl text-xl">
         <div className={`flex space-x-0.5`}>
-          <TbEdit className={`cursor-pointer`} onClick={() => setET(task.id)} />
+          <BiTask
+            className={`cursor-pointer`}
+            onClick={() => setET({ id: task.id, action: "view" })}
+          />
+          <TbEdit
+            className={`cursor-pointer`}
+            onClick={() => setET({ id: task.id, action: "edit" })}
+          />
           <TbTrashX
             className={`cursor-pointer`}
             onClick={() => handleDelete(task.id)}
