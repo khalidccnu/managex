@@ -38,7 +38,7 @@ const EditTaskModal: FC<Props> = ({ eT, setET, isETMO, setETMO, tasks }) => {
     onSubmit: (values) => {
       const taskAll: { id?: string; title?: string; description?: string }[] =
         getTasks();
-      const taskIndex = taskAll.findIndex((elem) => elem.id === eT.id);
+      const taskIndex = taskAll.findIndex((elem) => elem.id === eT?.id);
 
       (taskAll[taskIndex].title = values.title),
         (taskAll[taskIndex].description = values.description);
@@ -58,10 +58,10 @@ const EditTaskModal: FC<Props> = ({ eT, setET, isETMO, setETMO, tasks }) => {
       const taskIndex = taskAll.findIndex((elem) => elem.id === eT?.id);
 
       const task = taskAll[taskIndex];
-      // @ts-ignore
-      // @ts-ignore
       formik.setValues({
+        // @ts-ignore
         title: task.title,
+        // @ts-ignore
         description: task.description,
       });
     }

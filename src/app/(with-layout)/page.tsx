@@ -1,13 +1,12 @@
 "use client";
 
-import { FC, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { inject, observer } from "mobx-react";
 import { CgMenuLeft } from "react-icons/cg";
 import { FaTimesCircle } from "react-icons/fa";
 import AddTaskModal from "@/components/modals/AddTaskModal";
 import Sidebar from "@/components/Sidebar";
 import NoTask from "@/components/NoTask";
-import { Tasks } from "@/providers/TasksProvider";
 import { getTasks } from "@/utils/localStorage";
 import Loader from "@/components/Loader";
 import Header from "@/components/Header";
@@ -15,11 +14,8 @@ import TasksContainer from "@/components/TasksContainer";
 import ViewTaskModal from "@/components/modals/ViewTaskModal";
 import EditTaskModal from "@/components/modals/EditTaskModal";
 
-type Props = {
-  tasks: Tasks;
-};
-
-const Home: FC<Props> = ({ tasks }) => {
+const Home = (props: any) => {
+  const { tasks } = props;
   const [hbMenu, setHbMenu] = useState(true);
   const [isATMO, setATMO] = useState(false);
   const [eT, setET] = useState<null | { id: string; action: string }>(null);
